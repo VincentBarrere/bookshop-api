@@ -6,6 +6,7 @@ use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use App\Controller\PostCountController;
 use App\Controller\PostPublishController;
 use App\Repository\PostRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -17,10 +18,45 @@ use Symfony\Component\Validator\Constraints\Length;
 #[ApiResource(
     collectionOperations: [
         'get',
-        'post'=>[
-            'validation_groups'=>[Post::class, 'validationGroups']
+        'post',
+        'count'=>[
+            'method'=>'GET',
+            'path'=>'/posts/count',
+            'controller'=>PostCountController::class,
+            'pagination_enabled'=>false,
+            'filters'=>[],
+            'openapi_context'=>[
+                'summary'=>'Récupère le nombre total d\'articles',
+                'parameters'=>[
+                    [
+                        'in'=>'query',
+                        'name'=>'online',
+                        'schema'=>[
+                            'type'=>'integer',
+                            'minimum'=>0,
+                            'maximum'=>1
+
+                        ],
+                        'description'=>'Filtre les article en ligne'
+                    ]
+                ],
+                'responses'=>[
+                    '200'=>[
+                        'description'=>"OK",
+                        'content'=>[
+                            'application/json'=>[
+                                'schema'=>[
+                                    'type'=>'integer',
+                                    'example'=>'3'
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
         ]
     ],
+
     itemOperations: [
         'put',
         'delete',
