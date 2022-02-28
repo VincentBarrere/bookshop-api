@@ -3,10 +3,13 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use App\Controller\PostPublishController;
 use App\Repository\PostRepository;
 use Doctrine\ORM\Mapping as ORM;
+use mysql_xdevapi\Schema;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints\Length;
 
@@ -23,7 +26,23 @@ use Symfony\Component\Validator\Constraints\Length;
         'delete',
         'get' => [
             'normalization_context' => ['groups' => ['read:collection', 'read:item', 'read:Post']]
-        ]],
+        ],
+        'publish'=>[
+            'method'=>'POST',
+            'path'=>'/posts/{id}/publish',
+            'controller'=> PostPublishController::class,
+            'openapi_context'=>[
+                'summary'=>'Permet de publier un article',
+                'requestBody'=>[
+                  'content'=>[
+                    'application/json'=>[
+                        'schema'=>[]
+                    ]
+                  ]
+                ]
+            ]
+        ]
+    ],
     denormalizationContext: ['groups' => ['write:Post']],
     normalizationContext: ['groups' => ['read:collection']],
     paginationMaximumItemsPerPage: 2
@@ -60,6 +79,12 @@ class Post
     #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'posts')]
     #[Groups(['read:item', 'write:Post'])]
     private $caategory;
+
+    #[ORM\Column(type: 'boolean',options: ["default"=>0])]
+    #[Groups(['read:collection']),
+        ApiProperty(openapiContext: ['type'=>'boolean','description'=>'En ligne ou pas ?'])
+    ]
+    private $online= false;
 
     public static function validationGroups(self $post){
         return ['create:Post'];
@@ -144,6 +169,18 @@ class Post
     public function setCaategory(?Category $caategory): self
     {
         $this->caategory = $caategory;
+
+        return $this;
+    }
+
+    public function getOnline(): ?bool
+    {
+        return $this->online;
+    }
+
+    public function setOnline(bool $online): self
+    {
+        $this->online = $online;
 
         return $this;
     }
