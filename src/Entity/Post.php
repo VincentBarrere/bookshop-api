@@ -2,22 +2,33 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\PostRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints\Length;
 
 #[ORM\Entity(repositoryClass: PostRepository::class)]
 #[ApiResource(
+    collectionOperations: [
+        'get',
+        'post'=>[
+            'validation_groups'=>[Post::class, 'validationGroups']
+        ]
+    ],
     itemOperations: [
         'put',
         'delete',
-        'get'=> [
-        'normalization_context'=>['groups'=>['read:collection','read:item','read:Post']]
-    ]],
-    denormalizationContext: ['groups'=>['write:Post']],
-    normalizationContext: ['groups'=>['read:collection']]
-)]
+        'get' => [
+            'normalization_context' => ['groups' => ['read:collection', 'read:item', 'read:Post']]
+        ]],
+    denormalizationContext: ['groups' => ['write:Post']],
+    normalizationContext: ['groups' => ['read:collection']],
+    paginationMaximumItemsPerPage: 2
+),
+ApiFilter(SearchFilter::class, properties: ['id'=>'exact','title'=>'partial'])]
 class Post
 {
     #[ORM\Id]
@@ -27,7 +38,8 @@ class Post
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['read:collection', 'write:Post'])]
+    #[Groups(['read:collection', 'write:Post']),
+        Length(min: 5, groups:['create:Post'])]
     private $title;
 
     #[ORM\Column(type: 'string', length: 255)]
@@ -49,7 +61,12 @@ class Post
     #[Groups(['read:item', 'write:Post'])]
     private $caategory;
 
-    public function __construct(){
+    public static function validationGroups(self $post){
+        return ['create:Post'];
+    }
+
+    public function __construct()
+    {
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
     }
