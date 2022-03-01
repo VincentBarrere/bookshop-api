@@ -7,35 +7,38 @@
         "php": ">=8.0.2",
         "ext-ctype": "*",
         "ext-iconv": "*",
-        "api-platform/core": "^2.6",
-        "doctrine/annotations": "^1.0",
-        "doctrine/doctrine-bundle": "^2.5",
-        "doctrine/doctrine-migrations-bundle": "^3.2",
-        "doctrine/orm": "^2.11",
-        "nelmio/cors-bundle": "^2.2",
-        "phpdocumentor/reflection-docblock": "^5.3",
-        "phpstan/phpdoc-parser": "^1.2",
-        "symfony/asset": "6.0.*",
-        "symfony/console": "6.0.*",
-        "symfony/dotenv": "6.0.*",
-        "symfony/expression-language": "6.0.*",
-        "symfony/flex": "^2",
-        "symfony/framework-bundle": "6.0.*",
-        "symfony/property-access": "6.0.*",
-        "symfony/property-info": "6.0.*",
-        "symfony/proxy-manager-bridge": "6.0.*",
-        "symfony/runtime": "6.0.*",
-        "symfony/security-bundle": "6.0.*",
-        "symfony/serializer": "6.0.*",
-        "symfony/twig-bundle": "6.0.*",
-        "symfony/validator": "6.0.*",
-        "symfony/yaml": "6.0.*"
+        "api-platform\/core": "^2.6",
+        "doctrine\/annotations": "^1.0",
+        "doctrine\/doctrine-bundle": "^2.5",
+        "doctrine\/doctrine-migrations-bundle": "^3.2",
+        "doctrine\/orm": "^2.11",
+        "nelmio\/cors-bundle": "^2.2",
+        "phpdocumentor\/reflection-docblock": "^5.3",
+        "phpstan\/phpdoc-parser": "^1.2",
+        "ramsey\/uuid": "^4.2",
+        "symfony\/asset": "6.0.*",
+        "symfony\/console": "6.0.*",
+        "symfony\/dotenv": "6.0.*",
+        "symfony\/expression-language": "6.0.*",
+        "symfony\/flex": "^2",
+        "symfony\/framework-bundle": "6.0.*",
+        "symfony\/property-access": "6.0.*",
+        "symfony\/property-info": "6.0.*",
+        "symfony\/proxy-manager-bridge": "6.0.*",
+        "symfony\/runtime": "6.0.*",
+        "symfony\/security-bundle": "6.0.*",
+        "symfony\/serializer": "6.0.*",
+        "symfony\/twig-bundle": "6.0.*",
+        "symfony\/validator": "6.0.*",
+        "symfony\/yaml": "6.0.*",
+        "johndoe": "5.2.*",
+        "jgrqe": "5.2.*"
     },
     "config": {
         "allow-plugins": {
-            "composer/package-versions-deprecated": true,
-            "symfony/flex": true,
-            "symfony/runtime": true
+            "composer\/package-versions-deprecated": true,
+            "symfony\/flex": true,
+            "symfony\/runtime": true
         },
         "optimize-autoloader": true,
         "preferred-install": {
@@ -45,21 +48,21 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src/"
+            "App\\": "src\/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "App\\Tests\\": "tests/"
+            "App\\Tests\\": "tests\/"
         }
     },
     "replace": {
-        "symfony/polyfill-ctype": "*",
-        "symfony/polyfill-iconv": "*",
-        "symfony/polyfill-php72": "*",
-        "symfony/polyfill-php73": "*",
-        "symfony/polyfill-php74": "*",
-        "symfony/polyfill-php80": "*"
+        "symfony\/polyfill-ctype": "*",
+        "symfony\/polyfill-iconv": "*",
+        "symfony\/polyfill-php72": "*",
+        "symfony\/polyfill-php73": "*",
+        "symfony\/polyfill-php74": "*",
+        "symfony\/polyfill-php80": "*"
     },
     "scripts": {
         "auto-scripts": {
@@ -74,7 +77,7 @@
         ]
     },
     "conflict": {
-        "symfony/symfony": "*"
+        "symfony\/symfony": "*"
     },
     "extra": {
         "symfony": {
@@ -83,8 +86,8 @@
         }
     },
     "require-dev": {
-        "symfony/maker-bundle": "^1.37",
-        "symfony/stopwatch": "6.0.*",
-        "symfony/web-profiler-bundle": "6.0.*"
+        "symfony\/maker-bundle": "^1.37",
+        "symfony\/stopwatch": "6.0.*",
+        "symfony\/web-profiler-bundle": "6.0.*"
     }
 }
